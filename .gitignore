@@ -1,0 +1,22 @@
+# Ignora a pasta node_modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios de build
+dist/
+build/
+
+# Arquivos de ambiente (caso use .env)
+.env
+
+# Cache do editor
+.vscode/
+.idea/
+
+# Sistema operacional (Windows, Mac)
+Thumbs.db
+.DS_Store

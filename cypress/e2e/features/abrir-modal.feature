@@ -2,9 +2,9 @@
 
 Funcionalidade: Finanças pessoais
 
-  Como um usuário que controla seu dinheiro
-  Quero registrar entradas e saídas de valores
-  Para acompanhar minhas finanças mensais
+  # Como um usuário que controla seu dinheiro
+  # Quero registrar entradas e saídas de valores
+  # Para acompanhar minhas finanças mensais
 
   Cenário: Abrir modal de nova transação
     Dado que o usuário está na página principal

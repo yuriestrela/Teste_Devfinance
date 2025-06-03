@@ -4,7 +4,7 @@ Given('que o usuário está na página principal', () => {
     cy.visit('https://dev-finance.netlify.app/')
 });
 
-And('o modal de nova transação está aberto', () => {
+Then('o modal de nova transação está aberto', () => {
     cy.get('.button.new').click();
     cy.get('.modal').should('be.visible');
 });

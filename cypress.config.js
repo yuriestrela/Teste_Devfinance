@@ -13,8 +13,7 @@ module.exports = defineConfig({
       }));
       return config;
     },
-    specPattern: "cypress/e2e/features/**/*.feature",
-    baseUrl: "http://localhost:5500", // ou sua URL real
-    stepDefinitions: "cypress/e2e/step_definitions"
+    specPattern: "cypress/e2e/features/*.feature",
+    stepDefinitions: "cypress/e2e/step_definitions/**/*.{js,ts}"
   }
 });

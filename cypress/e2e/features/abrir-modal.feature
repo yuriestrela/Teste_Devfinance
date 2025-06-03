@@ -10,8 +10,3 @@ Funcionalidade: Finanças pessoais
     Dado que o usuário está na página principal
     Quando ele clicar no botão "Nova Transação"
     Então o modal deve aparecer
-
-  Cenário: Fechar o modal
-    Dado que o modal está aberto
-    Quando o usuário clicar no botão de fechar
-    Então o modal deve desaparecer

@@ -13,6 +13,7 @@ module.exports = defineConfig({
       }));
       return config;
     },
+    baseUrl: "https://dev-finance.netlify.app",
     specPattern: "cypress/e2e/features/*.feature",
     stepDefinitions: "cypress/e2e/step_definitions/**/*.{js,ts}"
   }

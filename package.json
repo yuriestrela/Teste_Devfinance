@@ -27,5 +27,8 @@
     "messages": {
       "enabled": false
     }
+  },
+  "dependencies": {
+    "cypress-real-events": "^1.14.0"
   }
 }

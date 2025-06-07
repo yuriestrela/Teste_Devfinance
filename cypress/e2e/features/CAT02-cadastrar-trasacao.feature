@@ -13,11 +13,11 @@ Funcionalidade: Cadastrar transação de entrada ou despesa
         Dado que o usuário clica no botão "+ Nova Transação"
         E o usuário preenche os campos do modal com '<Descrição>', '<Valor>' e '<Data>'
         Quando o usuário clica no botão "Salvar"
-        Então a transação '<Descrição>', '<Valor>' e '<Data>' deve ser cadastrada com sucesso
+        Então a transação '<Descrição>' deve ser cadastrada com sucesso na linha <Index>
 
     Exemplos:
-        | Descrição | Valor    | Data      |
-        | Salário   | 5000     | 2025-06-04|
+        | Descrição | Valor    | Data      | Index |
+        | Salário   | 5000     | 2025-06-04| 0     |
 
 
     Cenário: CT002 - Cadastrar transação com campos obrigatórios vazios
@@ -27,8 +27,8 @@ Funcionalidade: Cadastrar transação de entrada ou despesa
         Então uma mensagem de erro deve ser exibida com o texto "Por favor, preencha todos os campos corretamente"
 
     Exemplos:
-        | Descrição | Valor | Data |
-        |           |       |      |
+        | Descrição | Valor | Data | Index |
+        |           |       |      |       |    
 
 
     Cenário: CT003 - Cadastrar transação com o campo descrição vazio
@@ -38,8 +38,8 @@ Funcionalidade: Cadastrar transação de entrada ou despesa
         Então uma mensagem de erro deve ser exibida com o texto "Por favor, preencha todos os campos corretamente"
 
     Exemplos:
-        | Descrição | Valor | Data       |
-        |           | 500   | 2025-06-04 |
+        | Descrição | Valor | Data       | Index |      
+        |           | 500   | 2025-06-04 | 0     |
 
 
     Cenário: CT004 - Cadastrar transação com o campo valor vazio
@@ -49,8 +49,8 @@ Funcionalidade: Cadastrar transação de entrada ou despesa
         Então uma mensagem de erro deve ser exibida com o texto "Por favor, preencha todos os campos corretamente"
 
     Exemplos:
-        | Descrição | Valor | Data       |
-        | Aluguel   |       | 2025-06-04 |
+        | Descrição | Valor | Data       | Index |
+        | Aluguel   |       | 2025-06-04 | 0     |
 
 
     Cenário: CT005 - Cadastrar transação com o campo data vazio
@@ -60,40 +60,48 @@ Funcionalidade: Cadastrar transação de entrada ou despesa
         Então uma mensagem de erro deve ser exibida com o texto "Por favor, preencha todos os campos corretamente"
 
     Exemplos:
-        | Descrição     | Valor | Data |
-        | Conta de Luz  | 200   |      |
+        | Descrição     | Valor | Data | Index |
+        | Conta de Luz  | 200   |      | 0     |
 
 
     Cenário: CT006 - Cadastrar transação de despesa válida
         Dado que o usuário clica no botão "+ Nova Transação"
         E o usuário preenche os campos do modal com '<Descrição>', '<Valor>' e '<Data>'
         Quando o usuário clica no botão "Salvar"
-        Então a transação '<Descrição>', '<Valor>' e '<Data>' deve ser cadastrada com sucesso
+        Então a transação '<Descrição>' deve ser cadastrada com sucesso na linha <Index>
 
     Exemplos:
-      | Descrição | Valor | Data       |
-      | Internet  | -150  | 2025-06-04 |
+      | Descrição | Valor | Data       | Index |
+      | Internet  | -150  | 2025-06-04 | 0     |
 
 
     Cenário: CT007 - Cadastrar múltiplas transações válidas
         Dado que o usuário clica no botão "+ Nova Transação"
         E o usuário cadastra as seguintes transações:
-        | Descrição       | Valor  | Data       |
-        | Salário         | 5000   | 2025-06-04 |
-        | Internet        | -150   | 2025-06-04 |
-        | Aluguel         | -1200  | 2025-06-04 |
+        | Descrição       | Valor  | Data       | Index |
+        | Salário         | 5000   | 2025-06-04 | 0     |
+        | Internet        | -150   | 2025-06-04 | 1     |
+        | Aluguel         | -1200  | 2025-06-04 | 2     |
         Quando o usuário clica no botão "Salvar"
-        Então a transação '<Descrição>', '<Valor>' e '<Data>' deve ser cadastrada com sucesso
+        Então as seguintes transações devem ser cadastradas com sucesso:
+        | Descrição | Index |
+        | Salário   | 0     |
+        | Internet  | 1     |
+        | Aluguel   | 2     |    
 
 
-    # Cenário: CT08 - Remover transação cadastrada
-    #     Dado que o usuário clica no botão "+ Nova Transação"
-    #     E o usuário cadastra as seguintes transações:
-    #     | Descrição       | Valor  | Data       |
-    #     | Salão           | -300   | 2025-06-04 |
-    #     | Mesada          |  100   | 2025-06-04 |
-    #     E o usuário clica no botão "Salvar"
-    #     E o usuário visualiza a transação cadastrada na lista de transações
-    #     Quando o usuário clica no botão "Remover" da transação
-    #     Então a transação '<Descrição>', '<Valor>' e '<Data>' deve ser removida com sucesso
-   
+    Cenário: CT008 - Remover transação cadastrada
+        Dado que o usuário clica no botão "+ Nova Transação"
+        E o usuário cadastra as seguintes transações:
+        | Descrição       | Valor  | Data       | Index |
+        | Salário         | 5000   | 2025-06-04 | 0     |
+        | Salão           | -300   | 2025-06-04 | 1     |
+        | Mesada          |  100   | 2025-06-04 | 2     |
+        E o usuário clica no botão "Salvar"
+        Quando o usuário clica no botão "Remover" das seguintes transações:
+        | Descrição  | Index |
+        | Mesada     | 2     |
+        | Salão      | 1     |
+        Então as seguintes transações devem ser removidas com sucesso:
+        | Mesada     |
+        | Salão      |

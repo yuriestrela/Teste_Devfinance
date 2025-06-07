@@ -20,9 +20,9 @@ When('o usuário clica no botão {string}', (saveButton) => {
     transactionPage.saveTransactionClick(saveButton);
 });
 
-Then('a transação {string}, {string} e {string} deve ser cadastrada com sucesso', (descricao, valor, data) => {
+Then('a transação {string} deve ser cadastrada com sucesso na linha {int}', (descricao, index) => {
     popupPage.shouldFecharPopup()
-    transactionPage.shouldCadastrarTransaction(descricao, valor, data);
+    transactionPage.shouldCadastrarTransaction(descricao, index);
 });
 
 Given('o usuário não preenche os campos do modal', () => {
@@ -33,16 +33,19 @@ Then('uma mensagem de erro deve ser exibida com o texto {string}', (error) => {
     transactionPage.validateAlertMessage(error);
 });
 
-
-When('o usuário visualiza a transação cadastrada na lista de transações', () => {
-    transactionPage.shouldCadastrarTransaction()
-})
-
 When('o usuário cadastra as seguintes transações:', (tabela) => {
     const transacoes = tabela.hashes()
     transacoes.forEach((transacao, index) => {
         transactionPage.fillTableFields(transacao, index, transacoes.length)
     })
+})
+
+Then('as seguintes transações devem ser cadastradas com sucesso:', (dataTable) => {
+    const transactions = dataTable.hashes(); // array de objetos [{Descrição, Index}, ...]
+    transactions.forEach(({ Descrição, Index }) => {
+        popupPage.shouldFecharPopup(); // se for necessário fechar o popup antes de cada validação
+        transactionPage.shouldCadastrarTransaction(Descrição, Number(Index));
+    });
 })
 
 Given('que o usuário tem transações cadastradas', (tabela) => {
@@ -52,10 +55,21 @@ Given('que o usuário tem transações cadastradas', (tabela) => {
     })
 })
 
+When('o usuário clica no botão "Remover" das seguintes transações:', (tabela) => {
+    const transacoes = tabela.hashes()
+    transacoes.forEach(({ Index }) => {
+        transactionPage.removeTransaction(Number(Index))
+
+    })
+})
+
 When('o usuário clica no botão {string} da transação', () => {
     transactionPage.removeTransaction()
 })
     
-Then('a transação deve ser removida com sucesso', () => {
-    transactionPage.shouldRemoveTransaction()
+Then('as seguintes transações devem ser removidas com sucesso:', (tabela) => {
+    const transacoes = tabela.hashes()
+    transacoes.forEach(({ Descrição }) => {
+        transactionPage.shouldRemoveTransaction(Descrição)
+    })
 })

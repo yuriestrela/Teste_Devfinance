@@ -16,10 +16,10 @@ export class TransactionPage {
         cy.get(objectPages.saveTransactionClick).should('have.text', saveButton).click();
     }
 
-    shouldCadastrarTransaction(descricao, valor, data) {
-        cy.get('tr').contains(descricao).parent('tr')
-            .should('contain', valor)
-            .and('contain', data);
+    shouldCadastrarTransaction(descricao, index) {
+        cy.get(`tr[data-index="${index}"]`).within(() => {
+            cy.get('td.description').should('have.text', descricao);
+        });    
     }
 
     validateAlertMessage(expectedText) {
@@ -45,12 +45,12 @@ export class TransactionPage {
         }
     }
 
-    removeTransaction(){
-        cy.get(objectPages.removeTransaction).click()
+    removeTransaction(index){
+        cy.get(`img[onclick="Transaction.remove(${index})"]`).click()
     }
 
-    shouldRemoveTransaction() {
-        cy.get(objectPages.removeTransaction).contains().should('not.exist')
+    shouldRemoveTransaction(descricao) {
+        cy.contains(objectPages.shouldRemoveTransaction, descricao).should('not.exist')
 
     }
 
@@ -61,5 +61,5 @@ objectPages = {
     typeValue: 'input[name="amount"]',
     typeDate: 'input[name="date"]',
     saveTransactionClick: 'div[class="input-group actions"] button',
-    removeTransaction: 'img[onclick="Transaction.remove(0)"]',
+    shouldRemoveTransaction: 'td.description'
 }

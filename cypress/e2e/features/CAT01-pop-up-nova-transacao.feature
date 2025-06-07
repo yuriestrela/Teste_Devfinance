@@ -8,10 +8,10 @@ Funcionalidade: Abrir e fechar o pop up de nova transação
 
   Cenário: CT001 - Abrir modal de nova transação
     Dado que o usuário está na página principal
-    Quando ele clicar no botão "Nova Transação"
+    Quando ele clicar no botão "+ Nova Transação"
     Então o modal deve aparecer
 
   Cenário: CT002 - Fecha o pop up de nova transação
-    Dado que o usuário está de com o pop nova transação aberto
+    Dado que o usuário está de com o pop nova transação aberto "+ Nova Transação"
     Quando o usuário clica no botão de cancelar do modal
     Então o modal de nova transação deve ser fechado

@@ -1,18 +1,59 @@
 export class TransactionPage {
 
-    fillModalFields(){
-        cy.get(objectPages.typeDescription).type('Compra de Material');
-        cy.get(objectPages.typeValue).type('100');
-        cy.get(objectPages.typeDate).type('2023-10-01');
+    fillModalFields(descricao, valor, data) {
+        if (descricao) {
+            cy.get(objectPages.typeDescription).clear().type(descricao);
+        }
+        if (valor) {
+            cy.get(objectPages.typeValue).clear().type(valor);
+        }
+        if (data) {
+            cy.get(objectPages.typeDate).clear().type(data);
+        }
     }
 
     saveTransactionClick(saveButton) {
         cy.get(objectPages.saveTransactionClick).should('have.text', saveButton).click();
     }
 
-    shouldCadastrarTransaction() {
-        cy.get(objectPages.shouldCadastrarTransaction).should('be.visible');
+    shouldCadastrarTransaction(descricao, valor, data) {
+        cy.get('tr').contains(descricao).parent('tr')
+            .should('contain', valor)
+            .and('contain', data);
     }
+
+    validateAlertMessage(expectedText) {
+        cy.on('window:alert', (alertText) => {
+            expect(alertText).to.equal(expectedText)
+        })
+    }
+
+    fillTableFields(transacao, index, total){
+        if(transacao.Descrição) {
+            cy.get(objectPages.typeDescription).clear().type(transacao.Descrição)
+        }
+        if(transacao.Valor) {
+            cy.get(objectPages.typeValue).clear().type(transacao.Valor)
+        }
+        if(transacao.Data) {
+            cy.get(objectPages.typeDate).clear().type(transacao.Data)
+        }
+        
+        if (index < total - 1) {
+            cy.get(objectPages.saveTransactionClick).click();
+            cy.get('a[class="button new"]').click()
+        }
+    }
+
+    removeTransaction(){
+        cy.get(objectPages.removeTransaction).click()
+    }
+
+    shouldRemoveTransaction() {
+        cy.get(objectPages.removeTransaction).contains().should('not.exist')
+
+    }
+
 }
 
 objectPages = {
@@ -20,5 +61,5 @@ objectPages = {
     typeValue: 'input[name="amount"]',
     typeDate: 'input[name="date"]',
     saveTransactionClick: 'div[class="input-group actions"] button',
-    shouldCadastrarTransaction: 'tr[data-index="0"]',
+    removeTransaction: 'img[onclick="Transaction.remove(0)"]',
 }
